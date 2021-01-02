@@ -1,7 +1,7 @@
 package com.sinacomsys.prj1.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.Normalizer;
+import java.util.*;
 
 public class Graph {
     private int id;
@@ -20,5 +20,35 @@ public class Graph {
 
     private boolean validateGraph() {
         return false;
+    }
+
+    public String getUniqDescriptor() {
+        Formatter formatter = new Formatter(Locale.US);
+
+        formatter.format("%d=", nodes.size());
+        Collections.sort(nodes);
+        for (int nodeId : nodes) {
+            formatter.format("%d-", nodeId);
+        }
+
+        formatter.format("%d=", vectors.size());
+
+        vectors.sort((o1, o2) -> {
+            if (o1.getSource() > o2.getSource()) {
+                return 1;
+            } else if (o1.getSource() < o2.getSource()) {
+                return -1;
+            } else if (o1.getDestination() > o2.getDestination()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        for (Vector vector : vectors) {
+            formatter.format("%d:%d-", vector.getSource(), vector.getDestination());
+        }
+
+        return formatter.toString();
     }
 }
