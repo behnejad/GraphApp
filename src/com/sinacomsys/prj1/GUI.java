@@ -17,6 +17,8 @@ public class GUI extends JFrame {
     private JTextArea inputGraph;
     private JComboBox inputFormat;
     private JButton storeButton;
+    private JTextField idInput;
+    private JButton retrieveButton;
 
     private static final String DB_PATH = "graph.db";
 
@@ -60,6 +62,14 @@ public class GUI extends JFrame {
                 storeGraph(graph);
             }
         });
+        retrieveButton.addActionListener(e -> {
+            inputGraph.setText("");
+            String id = idInput.getText();
+            if (id != null) {
+                int i = Integer.parseInt(id);
+                inputGraph.setText(getGraph(i));
+            }
+        });
     }
 
     private void storeGraph(Graph graph) {
@@ -67,7 +77,7 @@ public class GUI extends JFrame {
             GraphDataAccess graphDataAccess = new SQLiteDataAccess(DB_PATH);
             int id = graphDataAccess.storeGraph(graph);
             if (id > 0) {
-                JOptionPane.showMessageDialog(this, "Graph saved with id " + id);
+                JOptionPane.showMessageDialog(this, "Graph saved with idInput " + id);
             } else {
                 JOptionPane.showMessageDialog(this, "Error on saving graph.");
             }
@@ -92,5 +102,14 @@ public class GUI extends JFrame {
         }
 
         return false;
+    }
+
+    private String getGraph(int id) {
+        if (storageBackend.getSelectedIndex() == 0) {
+            GraphDataAccess graphDataAccess = new SQLiteDataAccess(DB_PATH);
+            return graphDataAccess.getGraph(id);
+        }
+
+        return null;
     }
 }
