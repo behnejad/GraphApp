@@ -19,6 +19,9 @@ public class GUI extends JFrame {
     private JButton storeButton;
     private JTextField idInput;
     private JButton retrieveButton;
+    private JButton calculateButton;
+    private JTextField sourceId;
+    private JTextField destId;
 
     private static final String DB_PATH = "graph.db";
 
@@ -68,6 +71,29 @@ public class GUI extends JFrame {
             if (id != null) {
                 int i = Integer.parseInt(id);
                 inputGraph.setText(getGraph(i));
+            }
+        });
+        calculateButton.addActionListener(e -> {
+            int s, d;
+            String source = sourceId.getText();
+
+            if (source != null && source.length() > 0) {
+                s = Integer.parseInt(source);
+            }
+            else {
+                return;
+            }
+
+            String dest = sourceId.getText();
+            if (dest != null && dest.length() > 0) {
+                d = Integer.parseInt(dest);
+            } else {
+                return;
+            }
+
+            Graph graph = parseGraph();
+            if (graph != null) {
+                JOptionPane.showMessageDialog(this, "shortest path length is " + graph.shortestPath(s, d));
             }
         });
     }

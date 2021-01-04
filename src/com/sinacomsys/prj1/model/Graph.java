@@ -78,4 +78,8 @@ public class Graph {
 
         return formatter.toString();
     }
+
+    public int shortestPath(int s, int d) {
+        return 0;
+    }
 }
