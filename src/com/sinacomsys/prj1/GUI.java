@@ -44,7 +44,7 @@ public class GUI extends JFrame {
             Graph graph = parseGraph();
             if (graph == null) {
                 JOptionPane.showMessageDialog(this, "Wrong format.");
-            } else if (!searchGraph(graph)) {
+            } else if (searchGraph(graph)) {
                 JOptionPane.showMessageDialog(this, "Graph exists.");
             } else {
                 JOptionPane.showMessageDialog(this, "Graph does not exist.");
@@ -54,7 +54,7 @@ public class GUI extends JFrame {
             Graph graph = parseGraph();
             if (graph == null) {
                 JOptionPane.showMessageDialog(this, "Wrong format.");
-            } else if (!searchGraph(graph)) {
+            } else if (searchGraph(graph)) {
                 JOptionPane.showMessageDialog(this, "Graph exists.");
             } else {
                 storeGraph(graph);
@@ -65,7 +65,12 @@ public class GUI extends JFrame {
     private void storeGraph(Graph graph) {
         if (storageBackend.getSelectedIndex() == 0) {
             GraphDataAccess graphDataAccess = new SQLiteDataAccess(DB_PATH);
-            graphDataAccess.storeGraph(graph);
+            int id = graphDataAccess.storeGraph(graph);
+            if (id > 0) {
+                JOptionPane.showMessageDialog(this, "Graph saved with id " + id);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error on saving graph.");
+            }
         }
     }
 

@@ -4,7 +4,6 @@ import java.text.Normalizer;
 import java.util.*;
 
 public class Graph {
-    private int id;
     private List<Integer> nodes;
     private List<Vector> vectors;
 
@@ -16,6 +15,14 @@ public class Graph {
     public Graph(List<Integer> nodes, List<Vector> vectors) {
         this.nodes = nodes;
         this.vectors = vectors;
+    }
+
+    public List<Integer> getNodes() {
+        return nodes;
+    }
+
+    public List<Vector> getVectors() {
+        return vectors;
     }
 
     private boolean validateGraph() {

@@ -1,14 +1,28 @@
 package com.sinacomsys.prj1.parser;
 
 import com.sinacomsys.prj1.model.Graph;
+import com.sinacomsys.prj1.model.Vector;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.Inet4Address;
 import java.util.ArrayList;
 
 public class GraphJsonParser implements GraphParser {
     public GraphJsonParser() {
+    }
+
+    @Override
+    public String composer(Graph graph) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("node", new JSONArray(graph.getNodes()));
+
+        ArrayList<JSONObject> edges = new ArrayList<>();
+        for (Vector v : graph.getVectors()) {
+            edges.add(new JSONObject().put("source", v.getSource()).put("destination", v.getDestination()));
+        }
+
+        jsonObject.put("edges", edges);
+        return jsonObject.toString();
     }
 
     @Override
