@@ -14,7 +14,7 @@ public class GUI extends JFrame {
     private JPanel panel1;
     private JButton searchBtn;
     private JComboBox storageBackend;
-    private JTextPane inputGraph;
+    private JTextArea inputGraph;
     private JComboBox inputFormat;
     private JButton storeButton;
 

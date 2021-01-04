@@ -22,6 +22,26 @@ public class Graph {
         return false;
     }
 
+    public void addNode(int node) {
+        if (!nodes.contains(node)) {
+            nodes.add(node);
+        }
+    }
+
+    public void addEdge(int s, int d) {
+        boolean exist = false;
+        for (Vector v : vectors) {
+            if (v.getSource() == s && v.getDestination() == d) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (!exist) {
+            vectors.add(new Vector(s, d));
+        }
+    }
+
     public String getUniqDescriptor() {
         Formatter formatter = new Formatter(Locale.US);
 
