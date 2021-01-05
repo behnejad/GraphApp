@@ -45,7 +45,7 @@ public class Graph {
         }
 
         if (!exist) {
-            vectors.add(new Vector(s, d));
+            vectors.add(new Vector(Integer.min(s, d), Integer.max(s, d)));
         }
     }
 
