@@ -84,7 +84,7 @@ public class GUI extends JFrame {
                 return;
             }
 
-            String dest = sourceId.getText();
+            String dest = destId.getText();
             if (dest != null && dest.length() > 0) {
                 d = Integer.parseInt(dest);
             } else {
@@ -103,7 +103,7 @@ public class GUI extends JFrame {
             GraphDataAccess graphDataAccess = new SQLiteDataAccess(DB_PATH);
             int id = graphDataAccess.storeGraph(graph);
             if (id > 0) {
-                JOptionPane.showMessageDialog(this, "Graph saved with idInput " + id);
+                JOptionPane.showMessageDialog(this, "Graph saved with id: " + id);
             } else {
                 JOptionPane.showMessageDialog(this, "Error on saving graph.");
             }

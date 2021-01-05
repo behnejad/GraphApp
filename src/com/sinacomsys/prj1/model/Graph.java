@@ -80,6 +80,60 @@ public class Graph {
     }
 
     public int shortestPath(int s, int d) {
-        return 0;
+        HashMap<Integer, java.util.Vector<Integer>> nodes_vector = new HashMap<>();
+        for (Vector v : vectors) {
+            if (nodes_vector.containsKey(v.getSource())) {
+                java.util.Vector<Integer> neighbors = nodes_vector.get(v.getSource());
+                if (!neighbors.contains(v.getDestination())) {
+                    neighbors.add(v.getDestination());
+                }
+            } else {
+                java.util.Vector<Integer> value = new java.util.Vector<>();
+                value.add(v.getDestination());
+                nodes_vector.put(v.getSource(), value);
+            }
+
+            if (nodes_vector.containsKey(v.getDestination())) {
+                java.util.Vector<Integer> neighbors = nodes_vector.get(v.getDestination());
+                if (!neighbors.contains(v.getSource())) {
+                    neighbors.add(v.getSource());
+                }
+            } else {
+                java.util.Vector<Integer> value = new java.util.Vector<>();
+                value.add(v.getSource());
+                nodes_vector.put(v.getDestination(), value);
+            }
+        }
+        HashSet<Integer> visited = new HashSet<>();
+        visited.add(s);
+        return dfs(s, d, 0, visited, nodes_vector);
+    }
+
+    private int dfs(int s, int d, int depth, Set<Integer> visited, HashMap<Integer, java.util.Vector<Integer>> map) {
+        if (s == d) {
+            return depth;
+        }
+
+        if (!map.containsKey(s)) {
+            return -1;
+        }
+
+        int min = -1;
+
+        int local;
+        for (Integer neighbor : map.get(s)) {
+            if (!visited.contains(neighbor)) {
+                visited.add(neighbor);
+                local = dfs(neighbor, d, depth + 1, visited, map);
+                visited.remove(neighbor);
+                if (min == -1) {
+                    min = local;
+                } else {
+                    min = Integer.min(min, local);
+                }
+            }
+        }
+
+        return min;
     }
 }
